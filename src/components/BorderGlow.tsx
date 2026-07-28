@@ -1,5 +1,3 @@
-"use client";
-
 import type { CSSProperties, PointerEvent, ReactNode } from "react";
 import { useCallback, useRef } from "react";
 
@@ -72,7 +70,9 @@ export default function BorderGlow({
 
   const [h = "168", s = "65", l = "55"] = glowColor.split(/\s+/);
   [100, 60, 40, 20, 10].forEach((opacity, index) => {
-    const key = index === 0 ? "--glow-color" : `--glow-color-${opacity}`;
+    const key = (index === 0
+      ? "--glow-color"
+      : `--glow-color-${opacity}`) as `--${string}`;
     style[key] = `hsl(${h}deg ${s}% ${l}% / ${Math.min(opacity * glowIntensity, 100)}%)`;
   });
   gradientPositions.forEach((position, index) => {
