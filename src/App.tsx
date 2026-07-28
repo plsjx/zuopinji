@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Particles from "./components/Particles";
 import ProfileCarousel from "./components/ProfileCarousel";
 import BorderGlow from "./components/BorderGlow";
@@ -143,6 +144,36 @@ const contacts = [
 ];
 
 export default function Home() {
+  const [activeWorkIndex, setActiveWorkIndex] = useState<number | null>(null);
+  const activeWork = activeWorkIndex === null ? null : works[activeWorkIndex];
+
+  useEffect(() => {
+    if (activeWorkIndex === null) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActiveWorkIndex(null);
+      if (event.key === "ArrowLeft") {
+        setActiveWorkIndex((current) =>
+          current === null ? null : (current - 1 + works.length) % works.length,
+        );
+      }
+      if (event.key === "ArrowRight") {
+        setActiveWorkIndex((current) =>
+          current === null ? null : (current + 1) % works.length,
+        );
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeWorkIndex]);
+
   return (
     <main className="siteBody">
       <MotionSystem />
@@ -302,9 +333,12 @@ export default function Home() {
           </div>
           <div className="workGallery">
             {works.map((work, index) => (
-              <article
+              <button
+                type="button"
                 className={`workTile ${index % 5 === 0 ? "workTileLarge" : ""}`}
                 key={work.image}
+                aria-label={`查看${work.title}全图`}
+                onClick={() => setActiveWorkIndex(index)}
               >
                 <img
                   src={work.image}
@@ -318,10 +352,68 @@ export default function Home() {
                   <span>{work.category}</span>
                   <h3>{work.title}</h3>
                 </div>
-              </article>
+              </button>
             ))}
           </div>
         </div>
+
+        {activeWork && activeWorkIndex !== null && (
+          <div
+            className="imageLightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${activeWork.title}全图`}
+          >
+            <button
+              className="imageLightboxBackdrop"
+              type="button"
+              aria-label="关闭全图"
+              onClick={() => setActiveWorkIndex(null)}
+            />
+            <div className="imageLightboxDialog">
+              <button
+                className="imageLightboxClose"
+                type="button"
+                aria-label="关闭全图"
+                onClick={() => setActiveWorkIndex(null)}
+              >
+                ×
+              </button>
+              <button
+                className="imageLightboxNav imageLightboxPrev"
+                type="button"
+                aria-label="查看上一张作品"
+                onClick={() =>
+                  setActiveWorkIndex(
+                    (activeWorkIndex - 1 + works.length) % works.length,
+                  )
+                }
+              >
+                ←
+              </button>
+              <figure>
+                <img src={activeWork.image} alt={activeWork.title} decoding="async" />
+                <figcaption>
+                  <span>{activeWork.category}</span>
+                  <strong>{activeWork.title}</strong>
+                  <small>
+                    {activeWorkIndex + 1} / {works.length}
+                  </small>
+                </figcaption>
+              </figure>
+              <button
+                className="imageLightboxNav imageLightboxNext"
+                type="button"
+                aria-label="查看下一张作品"
+                onClick={() =>
+                  setActiveWorkIndex((activeWorkIndex + 1) % works.length)
+                }
+              >
+                →
+              </button>
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="section strengths" id="strengths">
