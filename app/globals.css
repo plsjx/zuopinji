@@ -1,0 +1,1374 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #05070b;
+  --bg-soft: #090d15;
+  --panel: rgba(12, 17, 26, 0.78);
+  --panel-strong: rgba(14, 18, 28, 0.94);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --text: #f4f5f7;
+  --muted: rgba(244, 245, 247, 0.68);
+  --subtle: rgba(244, 245, 247, 0.44);
+  --blue: #6ea6ff;
+  --cyan: #4edce6;
+  --gold: #c9ab6f;
+  --red: #ff4b32;
+  --shadow: 0 32px 80px rgba(0, 0, 0, 0.42);
+  --max: 1700px;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(circle at top right, rgba(110, 166, 255, 0.16), transparent 28%),
+    radial-gradient(circle at 10% 12%, rgba(201, 171, 111, 0.08), transparent 22%),
+    linear-gradient(180deg, #05070b 0%, #070a12 42%, #04060a 100%);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 0;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.32;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  display: block;
+  width: 100%;
+}
+
+.siteBody {
+  position: relative;
+  overflow: hidden;
+}
+
+.openingAnimation {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  pointer-events: none;
+}
+
+.openingPanel {
+  background: #e9ff55;
+  transform-origin: top;
+}
+
+.openingPanelRight {
+  background: #39c2b1;
+  transform-origin: bottom;
+}
+
+.openingMarkMask {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.openingMark {
+  display: block;
+  color: #06100f;
+  font-size: clamp(2rem, 5vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.shell {
+  width: min(var(--max), calc(100vw - 80px));
+  margin: 0 auto;
+}
+
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 78px 0;
+}
+
+.hero {
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  isolation: isolate;
+  overflow: hidden;
+  background: #060709;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 40px 34px;
+  z-index: 2;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+}
+
+.ambientCanvas,
+.particleLayer,
+.heroNoise {
+  position: absolute;
+  inset: 0;
+}
+
+.ambientCanvas {
+  z-index: -4;
+  background:
+    linear-gradient(130deg, rgba(95, 28, 18, 0.62), rgba(32, 36, 42, 0.5)),
+    radial-gradient(circle at 72% 28%, rgba(110, 166, 255, 0.3), transparent 32%),
+    radial-gradient(circle at 28% 78%, rgba(255, 75, 50, 0.14), transparent 28%),
+    #050711;
+  animation: ambientShift 14s ease-in-out infinite alternate;
+}
+
+.particleLayer {
+  z-index: -3;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.particles-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.particles-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.particles-fallback::before,
+.particles-fallback::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 32%, rgba(0, 255, 208, 0.38) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 24%, rgba(110, 166, 255, 0.32) 0 1px, transparent 2px),
+    radial-gradient(circle at 42% 72%, rgba(18, 220, 168, 0.32) 0 1px, transparent 2px);
+  background-size: 92px 92px, 138px 138px, 170px 170px;
+  animation: particleFallbackDrift 18s linear infinite;
+}
+
+.particles-fallback::after {
+  opacity: 0.52;
+  filter: blur(1px);
+  animation-duration: 26s;
+  animation-direction: reverse;
+}
+
+.heroNoise {
+  z-index: -2;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.2) 0 0.7px, transparent 1px),
+    linear-gradient(180deg, rgba(3, 4, 6, 0.12), rgba(4, 6, 10, 0.78)),
+    linear-gradient(90deg, rgba(4, 6, 10, 0.72) 0%, rgba(4, 6, 10, 0.16) 36%, rgba(4, 6, 10, 0.62) 100%);
+  background-size: 4px 4px, auto, auto;
+  mix-blend-mode: normal;
+}
+
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 96px;
+  transform: translateX(-50%);
+}
+
+.brand {
+  justify-self: start;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.navLinks {
+  display: inline-flex;
+  gap: 48px;
+  color: rgba(244, 245, 247, 0.7);
+  font-size: 0.78rem;
+}
+
+.navCta {
+  justify-self: end;
+  padding: 14px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(244, 245, 247, 0.9);
+  font-family: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.navLinks a,
+.navCta,
+.primaryButton,
+.ghostButton,
+.contactPanel a {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.navLinks a:hover,
+.navCta:hover,
+.ghostButton:hover,
+.contactPanel a:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: 138px;
+  padding-bottom: 76px;
+}
+
+.heroKicker {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(244, 245, 247, 0.72);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.heroTitle {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(7.2rem, 11vw, 12.8rem);
+  font-weight: 800;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.heroTitle span {
+  display: block;
+}
+
+.heroTitle span:last-child {
+  padding-left: 13vw;
+  color: rgba(244, 245, 247, 0.82);
+}
+
+.heroBottom {
+  display: grid;
+  grid-template-columns: minmax(0, 620px) auto;
+  align-items: end;
+  gap: 60px;
+}
+
+.heroBottom p {
+  margin: 0;
+  color: rgba(244, 245, 247, 0.76);
+  font-size: 1.12rem;
+  line-height: 1.85;
+}
+
+.heroActions {
+  display: flex;
+  gap: 16px;
+}
+
+.primaryButton,
+.ghostButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  font-size: 0.92rem;
+}
+
+.primaryButton {
+  border-color: rgba(255, 75, 50, 0.42);
+  background: rgba(255, 75, 50, 0.92);
+  color: #fff6f2;
+}
+
+.ghostButton {
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(244, 245, 247, 0.86);
+}
+
+.primaryButton:hover,
+.ghostButton:hover {
+  transform: translateY(-2px);
+}
+
+.sectionGrid,
+.sectionGridWide {
+  display: grid;
+  gap: 42px;
+}
+
+.sectionGrid {
+  grid-template-columns: 380px 1fr;
+}
+
+.sectionGridWide {
+  grid-template-columns: 420px 1fr;
+}
+
+.sectionIntro {
+  position: sticky;
+  top: 40px;
+  align-self: start;
+}
+
+.sectionTitleEn {
+  margin: 0 0 28px;
+  color: rgba(239, 231, 219, 0.08);
+  font-size: 7.5rem;
+  font-weight: 800;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.sectionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.sectionLabel span {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  color: var(--gold);
+}
+
+.sectionLabel p {
+  margin: 0;
+  color: rgba(244, 245, 247, 0.84);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+}
+
+.section h2,
+.contactSection h2 {
+  margin: 0;
+  max-width: 780px;
+  font-size: clamp(2.4rem, 3vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.journeyLayout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 22px;
+}
+
+.portraitCard,
+.journeyPanel,
+.projectCard,
+.strengthCard,
+.contactPanel {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(14, 18, 28, 0.94), rgba(7, 10, 16, 0.92));
+  box-shadow: var(--shadow);
+}
+
+.portraitCard {
+  overflow: hidden;
+}
+
+.profileCarousel {
+  position: relative;
+  min-width: 0;
+  transform: translateZ(0);
+  transition:
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+
+.profileGlow {
+  align-self: start;
+  min-width: 0;
+}
+
+.borderGlowCard {
+  --edge-proximity: 0;
+  --cursor-angle: 45deg;
+  --color-sensitivity: calc(var(--edge-sensitivity) + 20);
+  position: relative;
+  display: grid;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  isolation: isolate;
+  transform: translate3d(0, 0, 0.01px);
+}
+
+.borderGlowCard::before,
+.borderGlowCard::after,
+.borderGlowCard > .edgeLight {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+  transition: opacity 320ms ease;
+  pointer-events: none;
+}
+
+.borderGlowCard::before {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--card-bg) 0 100%) padding-box,
+    var(--gradient-1),
+    var(--gradient-2),
+    var(--gradient-3),
+    var(--gradient-4),
+    var(--gradient-5),
+    var(--gradient-6),
+    var(--gradient-7);
+  background-clip: padding-box, border-box, border-box, border-box, border-box, border-box, border-box, border-box;
+  mask-image: conic-gradient(
+    from var(--cursor-angle) at center,
+    #000 calc(var(--cone-spread) * 1%),
+    transparent calc((var(--cone-spread) + 16) * 1%),
+    transparent calc((84 - var(--cone-spread)) * 1%),
+    #000 calc((100 - var(--cone-spread)) * 1%)
+  );
+}
+
+.borderGlowCard::after {
+  background:
+    var(--gradient-1),
+    var(--gradient-2),
+    var(--gradient-3);
+  mix-blend-mode: soft-light;
+  opacity: calc(0.34 * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+}
+
+.borderGlowCard > .edgeLight {
+  inset: calc(var(--glow-padding) * -1);
+  z-index: 2;
+  opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+  mask-image: conic-gradient(from var(--cursor-angle) at center, #000 2%, transparent 11%, transparent 89%, #000 98%);
+}
+
+.edgeLight::before {
+  content: "";
+  position: absolute;
+  inset: var(--glow-padding);
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px var(--glow-color),
+    inset 0 0 10px var(--glow-color-40),
+    0 0 7px var(--glow-color-40),
+    0 0 24px var(--glow-color-20),
+    0 0 44px var(--glow-color-10);
+}
+
+.borderGlowInner {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: calc(var(--border-radius) - 1px);
+}
+
+.profileGlow .portraitCard {
+  border: 0;
+  border-radius: inherit;
+  box-shadow: none;
+}
+
+.profileCarousel:hover,
+.profileCarousel:focus-visible {
+  border-color: rgba(57, 194, 177, 0.38);
+  box-shadow:
+    var(--shadow),
+    0 0 0 1px rgba(57, 194, 177, 0.08);
+  transform: translateY(-4px);
+  outline: none;
+}
+
+.carouselViewport {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #071018;
+}
+
+.carouselSlide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 700ms ease,
+    transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  pointer-events: none;
+}
+
+.carouselSlide.isActive {
+  z-index: 1;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.carouselSlide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+}
+
+.carouselSlide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 58%, rgba(4, 7, 12, 0.72));
+  pointer-events: none;
+}
+
+.carouselSlide figcaption {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(5, 8, 13, 0.58);
+  color: rgba(244, 245, 247, 0.82);
+  font-size: 0.74rem;
+  backdrop-filter: blur(12px);
+}
+
+.carouselControls {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+
+.carouselControls button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(5, 8, 13, 0.62);
+  color: var(--text);
+  font-size: 1.05rem;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.carouselControls button:hover,
+.carouselControls button:focus-visible {
+  border-color: rgba(57, 194, 177, 0.7);
+  background: rgba(57, 194, 177, 0.2);
+  outline: none;
+}
+
+.portraitMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px;
+  color: var(--muted);
+}
+
+.portraitMeta > div:first-child {
+  display: grid;
+  gap: 6px;
+}
+
+.portraitMeta strong {
+  color: var(--text);
+}
+
+.carouselDots {
+  display: flex;
+  gap: 7px;
+}
+
+.carouselDots button {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(244, 245, 247, 0.28);
+  cursor: pointer;
+  transition: width 220ms ease, border-radius 220ms ease, background 220ms ease;
+}
+
+.carouselDots button.isActive {
+  width: 24px;
+  border-radius: 99px;
+  background: #39c2b1;
+}
+
+.journeyPanel {
+  padding: 28px;
+}
+
+.bioCard,
+.statCard {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.bioCard {
+  padding: 28px;
+}
+
+.bioCard > p:first-child,
+.projectType {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+}
+
+.bioCard h3 {
+  margin: 0;
+  font-size: 1.65rem;
+  line-height: 1.45;
+}
+
+.bioCopy,
+.statCard p,
+.projectCard p,
+.strengthCard p,
+.contactPanel p {
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.bioCopy {
+  margin: 20px 0 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.statCard {
+  min-height: 142px;
+  padding: 22px 18px;
+}
+
+.statCard strong {
+  display: block;
+  color: var(--blue);
+  font-size: 2rem;
+}
+
+.statCard p {
+  margin: 20px 0 0;
+  font-size: 0.95rem;
+}
+
+.contactList,
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.contactList {
+  margin-top: 20px;
+}
+
+.contactList a,
+.tagRow span {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.contactList span {
+  margin-right: 8px;
+  color: var(--gold);
+}
+
+.projectStack {
+  display: grid;
+  gap: 24px;
+  width: min(100%, 1080px);
+  justify-self: center;
+}
+
+.projectCard {
+  display: grid;
+  grid-template-columns: 440px 1fr;
+  gap: 22px;
+  padding: 22px;
+  overflow: hidden;
+}
+
+.featuredProject {
+  grid-template-columns: 1fr 0.9fr;
+  background:
+    linear-gradient(135deg, rgba(255, 75, 50, 0.09), transparent 34%),
+    linear-gradient(180deg, rgba(18, 21, 27, 0.96), rgba(7, 10, 16, 0.94));
+}
+
+.projectVisual {
+  min-height: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.projectVisual img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 520ms ease;
+}
+
+.projectCard:hover .projectVisual img {
+  transform: scale(1.045);
+}
+
+.projectCopy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 12px;
+}
+
+.projectCard h3 {
+  margin: 0;
+  font-size: 2.4rem;
+  line-height: 1.1;
+}
+
+.featuredProject h3 {
+  font-size: 3.1rem;
+}
+
+.projectCard p:not(.projectType) {
+  margin: 18px 0 0;
+}
+
+.tagRow {
+  margin-top: 30px;
+}
+
+.galleryShell {
+  margin-top: 88px;
+}
+
+.galleryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 32px;
+}
+
+.galleryHeader .sectionTitleEn {
+  margin: 0;
+  font-size: 6rem;
+}
+
+.galleryHeader h2 {
+  margin: 0;
+  font-size: 2.4rem;
+}
+
+.workGallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 18px;
+}
+
+.workTile {
+  position: relative;
+  min-height: 360px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(14, 18, 28, 0.9), rgba(6, 8, 13, 0.95));
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+}
+
+.workTileLarge {
+  grid-column: span 2;
+  grid-row: span 2;
+  min-height: 738px;
+}
+
+.workTile img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 520ms ease, filter 520ms ease;
+}
+
+.workTile:hover img {
+  filter: saturate(1.05) contrast(1.03);
+  transform: scale(1.035);
+}
+
+.workTile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(5, 7, 11, 0.88));
+  pointer-events: none;
+}
+
+.workTile div {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1;
+}
+
+.workTile span {
+  display: inline-flex;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(5, 7, 11, 0.46);
+  color: var(--gold);
+  font-size: 0.78rem;
+}
+
+.workTile h3 {
+  margin: 0;
+  font-size: 1.28rem;
+  line-height: 1.25;
+}
+
+.strengthGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.strengthCard {
+  min-height: 300px;
+  padding: 28px;
+}
+
+.strengthCard span {
+  color: var(--red);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.strengthCard h3 {
+  margin: 86px 0 18px;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.contactSection {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(circle at 64% 36%, rgba(255, 75, 50, 0.12), transparent 28%),
+    radial-gradient(circle at 12% 80%, rgba(78, 220, 230, 0.1), transparent 30%);
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 70px;
+  align-items: end;
+}
+
+.contactSection h2 {
+  max-width: 980px;
+  font-size: clamp(4.2rem, 6vw, 7.6rem);
+  line-height: 0.98;
+}
+
+.contactPanel {
+  padding: 34px;
+}
+
+.contactPanel a {
+  display: block;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  font-size: 1.35rem;
+}
+
+.contactPanel p {
+  margin: 28px 0 0;
+}
+
+.wechatModal {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.wechatBackdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(2, 4, 7, 0.78);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+}
+
+.wechatDialog {
+  position: relative;
+  z-index: 1;
+  width: min(460px, 100%);
+  padding: 30px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  background: #0b1018;
+  box-shadow: var(--shadow);
+  animation: modalReveal 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wechatDialog p {
+  margin: 0 0 10px;
+  color: #39c2b1;
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+}
+
+.wechatDialog h2 {
+  margin: 0 44px 22px 0;
+  font-size: 1.65rem;
+}
+
+.wechatDialog img {
+  aspect-ratio: 913 / 2091;
+  max-height: 62vh;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.wechatDialog span {
+  display: block;
+  margin-top: 18px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.wechatClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+@keyframes modalReveal {
+  from {
+    opacity: 0;
+    transform: translateY(34px) scale(0.96);
+  }
+}
+
+@keyframes ambientShift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+    filter: saturate(0.92) hue-rotate(0deg);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.5%, 1%, 0);
+    filter: saturate(1.08) hue-rotate(-8deg);
+  }
+}
+
+@keyframes particleFallbackDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-90px, 70px, 0);
+  }
+}
+
+@media (max-width: 1400px) {
+  .sectionGrid,
+  .sectionGridWide,
+  .contactGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionIntro {
+    position: static;
+  }
+
+  .journeyLayout {
+    grid-template-columns: minmax(300px, 0.72fr) 1.28fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .shell {
+    width: min(var(--max), calc(100vw - 48px));
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .topbar {
+    min-height: 80px;
+  }
+
+  .navLinks {
+    gap: 28px;
+  }
+
+  .heroContent {
+    padding-top: 116px;
+    padding-bottom: 56px;
+  }
+
+  .heroTitle {
+    font-size: clamp(5rem, 13vw, 8rem);
+  }
+
+  .heroBottom {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .journeyLayout,
+  .projectCard,
+  .featuredProject {
+    grid-template-columns: 1fr;
+  }
+
+  .profileCarousel {
+    width: min(100%, 620px);
+  }
+
+  .carouselViewport {
+    aspect-ratio: 16 / 10;
+  }
+
+  .workGallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workTileLarge {
+    min-height: 738px;
+  }
+
+  .contactSection h2 {
+    font-size: clamp(3.5rem, 8vw, 6rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .shell {
+    width: calc(100vw - 32px);
+  }
+
+  .section {
+    padding: 52px 0;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    min-height: 70px;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .navCta {
+    padding: 10px 13px;
+    border-radius: 8px;
+  }
+
+  .heroContent {
+    min-height: 100svh;
+    padding-top: 104px;
+    padding-bottom: 34px;
+  }
+
+  .heroKicker {
+    display: grid;
+    gap: 8px;
+    font-size: 0.68rem;
+  }
+
+  .heroTitle {
+    font-size: clamp(4.1rem, 20vw, 6rem);
+    line-height: 0.86;
+  }
+
+  .heroTitle span:last-child {
+    padding-left: 7vw;
+  }
+
+  .heroBottom p {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .heroActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .primaryButton,
+  .ghostButton {
+    min-height: 48px;
+    padding: 0 14px;
+    border-radius: 8px;
+  }
+
+  .sectionTitleEn {
+    margin-bottom: 20px;
+    font-size: 4.3rem;
+  }
+
+  .section h2,
+  .contactSection h2 {
+    font-size: 2.25rem;
+  }
+
+  .sectionGrid,
+  .sectionGridWide {
+    gap: 30px;
+  }
+
+  .journeyLayout {
+    gap: 16px;
+  }
+
+  .portraitCard,
+  .journeyPanel,
+  .projectCard,
+  .strengthCard,
+  .contactPanel,
+  .workTile {
+    border-radius: 16px;
+  }
+
+  .carouselViewport {
+    aspect-ratio: 4 / 5;
+  }
+
+  .portraitMeta {
+    padding: 18px;
+  }
+
+  .journeyPanel {
+    padding: 14px;
+  }
+
+  .bioCard {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .bioCard h3 {
+    font-size: 1.25rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .statCard {
+    min-height: 0;
+  }
+
+  .projectCard {
+    padding: 12px;
+  }
+
+  .projectVisual {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    border-radius: 12px;
+  }
+
+  .projectCard h3,
+  .featuredProject h3 {
+    font-size: 1.8rem;
+  }
+
+  .galleryShell {
+    margin-top: 58px;
+  }
+
+  .galleryHeader {
+    display: block;
+  }
+
+  .galleryHeader .sectionTitleEn {
+    margin-bottom: 18px;
+    font-size: 4rem;
+  }
+
+  .galleryHeader h2 {
+    font-size: 1.8rem;
+  }
+
+  .workGallery,
+  .strengthGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .workTile,
+  .workTileLarge {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+
+  .strengthCard {
+    min-height: 240px;
+    padding: 22px;
+  }
+
+  .strengthCard h3 {
+    margin-top: 56px;
+  }
+
+  .contactGrid {
+    gap: 38px;
+  }
+
+  .contactPanel {
+    padding: 22px;
+  }
+
+  .contactPanel a {
+    overflow-wrap: anywhere;
+    font-size: 1rem;
+  }
+
+  .wechatDialog {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .wechatDialog img {
+    max-height: 60vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .openingAnimation {
+    display: none;
+  }
+}
