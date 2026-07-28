@@ -1,0 +1,8 @@
+/assets/*
+  Cache-Control: public, max-age=31556952, immutable
+
+/works/*
+  Cache-Control: public, max-age=31556952, immutable
+
+/wechat-miyagi.webp
+  Cache-Control: public, max-age=31556952, immutable
