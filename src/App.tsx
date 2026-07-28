@@ -21,7 +21,7 @@ const featuredProjects = [
   {
     title: "电商产品视觉练习",
     type: "商品海报 / 促销设计 / 信息层级",
-    image: "/works/sports-earbuds.jpg",
+    image: "/works/sports-earbuds-960.webp",
     description:
       "围绕耳机、相机、鞋服、洗护等商品练习电商视觉表达，重点处理产品主体、价格信息、卖点标签和促销氛围之间的关系。",
     tags: ["电商海报", "产品卖点", "促销版式"],
@@ -29,7 +29,7 @@ const featuredProjects = [
   {
     title: "AI 角色与风格化视觉",
     type: "AI 视觉 / 角色海报 / 风格实验",
-    image: "/works/maimai-character.png",
+    image: "/works/maimai-character-960.webp",
     description:
       "尝试使用更强烈的角色视觉、竖排文字和图像层次制造记忆点，探索二次元风格在个人视觉练习中的表现方式。",
     tags: ["AI 视觉", "角色设计", "风格实验"],
@@ -37,7 +37,7 @@ const featuredProjects = [
   {
     title: "生活方式产品海报",
     type: "美妆洗护 / 母婴用品 / 氛围表达",
-    image: "/works/hydrating-skincare.jpg",
+    image: "/works/hydrating-skincare-960.webp",
     description:
       "用浅色、蓝色、水感和柔和光影表现洗护、美妆、母婴类产品的干净感与信任感，练习更柔和的商业视觉语言。",
     tags: ["洗护美妆", "氛围视觉", "版面组织"],
@@ -48,72 +48,72 @@ const works = [
   {
     title: "4D 环绕立体声耳机",
     category: "电商海报",
-    image: "/works/headphone-4d.png",
+    image: "/works/headphone-4d-960.webp",
   },
   {
     title: "拍立得相机海报",
     category: "产品视觉",
-    image: "/works/camera-poster.jpg",
+    image: "/works/camera-poster-960.webp",
   },
   {
     title: "佳洁士牙膏海报",
     category: "品牌练习",
-    image: "/works/crest-toothpaste.png",
+    image: "/works/crest-toothpaste-960.webp",
   },
   {
     title: "香薰产品海报",
     category: "生活方式",
-    image: "/works/fragrance-diffuser.png",
+    image: "/works/fragrance-diffuser-960.webp",
   },
   {
     title: "童鞋促销海报",
     category: "促销设计",
-    image: "/works/shoes-promo.png",
+    image: "/works/shoes-promo-960.webp",
   },
   {
     title: "无线耳机促销页",
     category: "电商海报",
-    image: "/works/earbuds-black.png",
+    image: "/works/earbuds-black-960.webp",
   },
   {
     title: "母婴用品横幅",
     category: "活动 Banner",
-    image: "/works/baby-care-banner.png",
+    image: "/works/baby-care-banner-960.webp",
   },
   {
     title: "控油洗发水海报",
     category: "洗护产品",
-    image: "/works/honey-shampoo.png",
+    image: "/works/honey-shampoo-960.webp",
   },
   {
     title: "零食会员活动横幅",
     category: "活动视觉",
-    image: "/works/snack-banner.png",
+    image: "/works/snack-banner-960.webp",
   },
   {
     title: "Maimai DX 角色海报",
     category: "AI 视觉",
-    image: "/works/maimai-character.png",
+    image: "/works/maimai-character-960.webp",
   },
   {
     title: "蓝色护肤促销页",
     category: "美妆海报",
-    image: "/works/skincare-blue.png",
+    image: "/works/skincare-blue-960.webp",
   },
   {
     title: "兔子枕头详情视觉",
     category: "产品场景",
-    image: "/works/rabbit-pillow.jpg",
+    image: "/works/rabbit-pillow-960.webp",
   },
   {
     title: "运动耳机详情海报",
     category: "科技产品",
-    image: "/works/sports-earbuds.jpg",
+    image: "/works/sports-earbuds-960.webp",
   },
   {
     title: "高保湿护肤详情页",
     category: "美妆详情",
-    image: "/works/hydrating-skincare.jpg",
+    image: "/works/hydrating-skincare-960.webp",
   },
 ];
 
@@ -273,6 +273,8 @@ export default function Home() {
                 <div className="projectVisual">
                   <img
                     src={project.image}
+                    srcSet={`${project.image.replace("-960.webp", "-480.webp")} 480w, ${project.image} 960w`}
+                    sizes="(max-width: 760px) 100vw, 52vw"
                     alt={`${project.title} 预览图`}
                     loading="lazy"
                     decoding="async"
@@ -304,7 +306,14 @@ export default function Home() {
                 className={`workTile ${index % 5 === 0 ? "workTileLarge" : ""}`}
                 key={work.image}
               >
-                <img src={work.image} alt={work.title} loading="lazy" decoding="async" />
+                <img
+                  src={work.image}
+                  srcSet={`${work.image.replace("-960.webp", "-480.webp")} 480w, ${work.image} 960w`}
+                  sizes="(max-width: 760px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  alt={work.title}
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div>
                   <span>{work.category}</span>
                   <h3>{work.title}</h3>

@@ -2,22 +2,22 @@ import { useEffect, useRef, useState } from "react";
 
 const slides = [
   {
-    image: "/works/maimai-character.png",
+    image: "/works/maimai-character-960.webp",
     alt: "Miyagi 的 AI 角色视觉作品",
     label: "AI 角色视觉",
   },
   {
-    image: "/works/sports-earbuds.jpg",
+    image: "/works/sports-earbuds-960.webp",
     alt: "Miyagi 的运动耳机电商视觉作品",
     label: "电商产品视觉",
   },
   {
-    image: "/works/hydrating-skincare.jpg",
+    image: "/works/hydrating-skincare-960.webp",
     alt: "Miyagi 的护肤产品视觉作品",
     label: "美妆详情视觉",
   },
   {
-    image: "/works/camera-poster.jpg",
+    image: "/works/camera-poster-960.webp",
     alt: "Miyagi 的相机产品视觉作品",
     label: "产品海报练习",
   },
@@ -75,8 +75,11 @@ export default function ProfileCarousel() {
           >
             <img
               src={slide.image}
+              srcSet={`${slide.image.replace("-960.webp", "-480.webp")} 480w, ${slide.image} 960w`}
+              sizes="(max-width: 760px) 100vw, 42vw"
               alt={slide.alt}
               loading={index === 0 ? "eager" : "lazy"}
+              fetchPriority={index === 0 ? "high" : "auto"}
               decoding="async"
             />
             <figcaption>{slide.label}</figcaption>
