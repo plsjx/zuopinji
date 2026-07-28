@@ -36,7 +36,12 @@ export default function WechatContact() {
             </button>
             <p>微信联系</p>
             <h2>扫一扫，添加 Miyagi</h2>
-            <img src="/wechat-miyagi.png" alt="Miyagi 微信二维码" />
+            <img
+              src="/wechat-miyagi.webp"
+              alt="Miyagi 微信二维码"
+              loading="lazy"
+              decoding="async"
+            />
             <span>浙江杭州 · 学习与项目交流</span>
           </div>
         </div>
