@@ -371,46 +371,57 @@ export default function Home() {
               onClick={() => setActiveWorkIndex(null)}
             />
             <div className="imageLightboxDialog">
-              <button
-                className="imageLightboxClose"
-                type="button"
-                aria-label="关闭全图"
-                onClick={() => setActiveWorkIndex(null)}
-              >
-                ×
-              </button>
-              <button
-                className="imageLightboxNav imageLightboxPrev"
-                type="button"
-                aria-label="查看上一张作品"
-                onClick={() =>
-                  setActiveWorkIndex(
-                    (activeWorkIndex - 1 + works.length) % works.length,
-                  )
-                }
-              >
-                ←
-              </button>
-              <figure>
-                <img src={activeWork.image} alt={activeWork.title} decoding="async" />
-                <figcaption>
+              <header className="imageLightboxHeader">
+                <div>
                   <span>{activeWork.category}</span>
                   <strong>{activeWork.title}</strong>
-                  <small>
-                    {activeWorkIndex + 1} / {works.length}
-                  </small>
-                </figcaption>
+                </div>
+                <small>
+                  {activeWorkIndex + 1} / {works.length}
+                </small>
+                <button
+                  className="imageLightboxClose"
+                  type="button"
+                  aria-label="关闭全图"
+                  onClick={() => setActiveWorkIndex(null)}
+                >
+                  ×
+                </button>
+              </header>
+              <figure>
+                <img
+                  src={activeWork.image}
+                  alt={activeWork.title}
+                  decoding="async"
+                />
               </figure>
-              <button
-                className="imageLightboxNav imageLightboxNext"
-                type="button"
-                aria-label="查看下一张作品"
-                onClick={() =>
-                  setActiveWorkIndex((activeWorkIndex + 1) % works.length)
-                }
-              >
-                →
-              </button>
+              <footer className="imageLightboxFooter">
+                <button
+                  className="imageLightboxNav"
+                  type="button"
+                  aria-label="查看上一张作品"
+                  onClick={() =>
+                    setActiveWorkIndex(
+                      (activeWorkIndex - 1 + works.length) % works.length,
+                    )
+                  }
+                >
+                  <span aria-hidden="true">←</span>
+                  上一张
+                </button>
+                <p>使用键盘方向键切换，Esc 关闭</p>
+                <button
+                  className="imageLightboxNav"
+                  type="button"
+                  aria-label="查看下一张作品"
+                  onClick={() =>
+                    setActiveWorkIndex((activeWorkIndex + 1) % works.length)
+                  }
+                >
+                  下一张
+                  <span aria-hidden="true">→</span>
+                </button>
+              </footer>
             </div>
           </div>
         )}

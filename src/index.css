@@ -930,7 +930,11 @@ video {
   z-index: 1000;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding:
+    max(16px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
 }
 
 .imageLightboxBackdrop {
@@ -947,8 +951,8 @@ video {
   z-index: 1;
   display: grid;
   width: min(1500px, 94vw);
-  height: min(92vh, 1100px);
-  place-items: center;
+  height: min(1100px, calc(100dvh - 32px));
+  grid-template-rows: auto minmax(0, 1fr) auto;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 24px;
   overflow: hidden;
@@ -956,47 +960,65 @@ video {
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.72);
 }
 
-.imageLightboxDialog figure {
+.imageLightboxHeader,
+.imageLightboxFooter {
+  position: relative;
+  z-index: 2;
   display: grid;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: center;
+  background: rgba(10, 14, 22, 0.98);
 }
 
-.imageLightboxDialog figure img {
+.imageLightboxHeader {
+  min-height: 72px;
+  padding: 12px 16px 12px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 18px;
+}
+
+.imageLightboxHeader div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.imageLightboxHeader span,
+.imageLightboxHeader small,
+.imageLightboxFooter p {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.imageLightboxHeader strong {
+  overflow: hidden;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imageLightboxDialog figure {
+  display: flex;
   width: 100%;
   height: 100%;
   min-height: 0;
-  padding: 20px;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imageLightboxDialog figure img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  padding: clamp(8px, 1.5vw, 24px);
   object-fit: contain;
 }
 
-.imageLightboxDialog figcaption {
-  display: grid;
-  padding: 16px 88px 18px 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(10, 14, 22, 0.96);
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px;
-}
-
-.imageLightboxDialog figcaption span,
-.imageLightboxDialog figcaption small {
-  color: var(--muted);
-  font-size: 0.82rem;
-}
-
-.imageLightboxDialog figcaption strong {
-  font-size: 1rem;
-}
-
-.imageLightboxClose,
-.imageLightboxNav {
-  position: absolute;
-  z-index: 2;
-  display: grid;
+.imageLightboxClose {
+  display: inline-grid;
   width: 48px;
   height: 48px;
   place-items: center;
@@ -1012,35 +1034,45 @@ video {
 }
 
 .imageLightboxClose:hover,
-.imageLightboxNav:hover,
-.imageLightboxClose:focus-visible,
-.imageLightboxNav:focus-visible {
+.imageLightboxClose:focus-visible {
   border-color: var(--cyan);
   background: rgba(26, 37, 54, 0.94);
   transform: scale(1.06);
 }
 
-.imageLightboxClose {
-  top: 18px;
-  right: 18px;
+.imageLightboxFooter {
+  min-height: 68px;
+  padding: 10px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px;
+}
+
+.imageLightboxFooter p {
+  margin: 0;
+  text-align: center;
 }
 
 .imageLightboxNav {
-  top: 50%;
-  transform: translateY(-50%);
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0 18px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(20, 27, 40, 0.8);
+  color: white;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease;
 }
 
 .imageLightboxNav:hover,
 .imageLightboxNav:focus-visible {
-  transform: translateY(-50%) scale(1.06);
-}
-
-.imageLightboxPrev {
-  left: 18px;
-}
-
-.imageLightboxNext {
-  right: 18px;
+  border-color: var(--cyan);
+  background: rgba(31, 44, 64, 0.98);
 }
 
 .strengthGrid {
@@ -1444,46 +1476,50 @@ video {
   }
 
   .imageLightbox {
-    padding: 10px;
+    padding:
+      max(8px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      max(8px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
   }
 
   .imageLightboxDialog {
-    width: calc(100vw - 20px);
-    height: calc(100dvh - 20px);
+    width: 100%;
+    height: 100%;
     border-radius: 16px;
   }
 
   .imageLightboxDialog figure img {
-    padding: 10px;
+    padding: 8px;
   }
 
-  .imageLightboxDialog figcaption {
-    padding: 14px 16px;
-    grid-template-columns: 1fr auto;
-    gap: 4px 12px;
+  .imageLightboxHeader {
+    min-height: 64px;
+    padding: 8px 10px 8px 14px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 10px;
   }
 
-  .imageLightboxDialog figcaption span {
-    grid-column: 1 / -1;
-  }
-
-  .imageLightboxClose,
-  .imageLightboxNav {
+  .imageLightboxClose {
     width: 42px;
     height: 42px;
   }
 
-  .imageLightboxClose {
-    top: 12px;
-    right: 12px;
+  .imageLightboxFooter {
+    min-height: 62px;
+    padding: 8px 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
-  .imageLightboxPrev {
-    left: 12px;
+  .imageLightboxFooter p {
+    display: none;
   }
 
-  .imageLightboxNext {
-    right: 12px;
+  .imageLightboxNav {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
   }
 
   .strengthCard {
@@ -1515,6 +1551,37 @@ video {
 
   .wechatDialog img {
     max-height: 60vh;
+  }
+}
+
+@media (max-height: 620px) {
+  .imageLightbox {
+    padding: 8px;
+  }
+
+  .imageLightboxDialog {
+    width: min(1500px, calc(100vw - 16px));
+    height: calc(100dvh - 16px);
+    border-radius: 14px;
+  }
+
+  .imageLightboxHeader,
+  .imageLightboxFooter {
+    min-height: 52px;
+    padding-block: 5px;
+  }
+
+  .imageLightboxClose {
+    width: 40px;
+    height: 40px;
+  }
+
+  .imageLightboxNav {
+    min-height: 40px;
+  }
+
+  .imageLightboxDialog figure img {
+    padding: 6px;
   }
 }
 
