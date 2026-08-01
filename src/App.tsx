@@ -1,9 +1,56 @@
-import { useEffect, useState } from "react";
-import Particles from "./components/Particles";
+import { lazy, Suspense, useEffect, useState } from "react";
 import ProfileCarousel from "./components/ProfileCarousel";
 import BorderGlow from "./components/BorderGlow";
 import MotionSystem from "./components/MotionSystem";
 import WechatContact from "./components/WechatContact";
+
+const Particles = lazy(() => import("./components/Particles"));
+
+function DeferredParticles() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) return undefined;
+
+    const windowWithIdleCallback = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    const handle = windowWithIdleCallback.requestIdleCallback
+      ? windowWithIdleCallback.requestIdleCallback(() => setIsReady(true), { timeout: 1200 })
+      : window.setTimeout(() => setIsReady(true), 400);
+
+    return () => {
+      if (windowWithIdleCallback.cancelIdleCallback) {
+        windowWithIdleCallback.cancelIdleCallback(handle);
+      } else {
+        window.clearTimeout(handle);
+      }
+    };
+  }, []);
+
+  if (!isReady) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <Particles
+        particleColors={["#39c2b1"]}
+        particleCount={300}
+        particleSpread={10}
+        speed={0.1}
+        particleBaseSize={100}
+        moveParticlesOnHover
+        particleHoverFactor={0.8}
+        alphaParticles={false}
+        sizeRandomness={1}
+        cameraDistance={20}
+        disableRotation={false}
+        pixelRatio={1}
+      />
+    </Suspense>
+  );
+}
 
 const navItems = [
   { label: "关于", href: "#experience" },
@@ -180,20 +227,7 @@ export default function Home() {
       <section className="hero section" id="top">
         <div className="ambientCanvas" aria-hidden="true" />
         <div className="particleLayer" aria-hidden="true">
-          <Particles
-            particleColors={["#39c2b1"]}
-            particleCount={300}
-            particleSpread={10}
-            speed={0.1}
-            particleBaseSize={100}
-            moveParticlesOnHover
-            particleHoverFactor={0.8}
-            alphaParticles={false}
-            sizeRandomness={1}
-            cameraDistance={20}
-            disableRotation={false}
-            pixelRatio={1}
-          />
+          <DeferredParticles />
         </div>
         <div className="heroNoise" aria-hidden="true" />
         <nav className="topbar shell" aria-label="主导航">

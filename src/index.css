@@ -114,6 +114,14 @@ video {
   padding: 78px 0;
 }
 
+.experience,
+.projects,
+.strengths,
+.contactSection {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 .hero {
   min-height: 100vh;
   padding: 0;

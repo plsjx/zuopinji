@@ -78,8 +78,8 @@ export default function ProfileCarousel() {
               srcSet={`${slide.image.replace("-960.webp", "-480.webp")} 480w, ${slide.image} 960w`}
               sizes="(max-width: 760px) 100vw, 42vw"
               alt={slide.alt}
-              loading={index === 0 ? "eager" : "lazy"}
-              fetchPriority={index === 0 ? "high" : "auto"}
+              loading="lazy"
+              fetchPriority="low"
               decoding="async"
             />
             <figcaption>{slide.label}</figcaption>
