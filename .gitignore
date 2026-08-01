@@ -17,6 +17,7 @@
 
 # build output
 /dist/
+/.codex_tmp/
 
 # misc
 .DS_Store
