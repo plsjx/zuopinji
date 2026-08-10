@@ -316,6 +316,58 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <div className="shell videoShowcase">
+          <header className="videoShowcaseHeader">
+            <div>
+              <span>VIDEO / 2026</span>
+              <h2>动态视频作品</h2>
+            </div>
+            <p>近期完成的动态视觉练习，点击画面即可播放并开启声音。</p>
+          </header>
+
+          <div className="videoGrid">
+            <article className="videoCard">
+              <div className="videoFrame">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/videos/video-aug10-poster.webp"
+                  aria-label="播放8月10日视频作品"
+                >
+                  <source src="/videos/video-aug10.mp4" type="video/mp4" />
+                  您的浏览器暂不支持视频播放。
+                </video>
+              </div>
+              <div className="videoCardCopy">
+                <span>01 / MOTION STUDY</span>
+                <h3>视频作品 · 8月10日</h3>
+                <p>短篇动态视觉练习，尝试节奏、构图与角色画面的结合。</p>
+              </div>
+            </article>
+
+            <article className="videoCard">
+              <div className="videoFrame">
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/videos/video-aug08-poster.webp"
+                  aria-label="播放8月8日视频作品"
+                >
+                  <source src="/videos/video-aug08.mp4" type="video/mp4" />
+                  您的浏览器暂不支持视频播放。
+                </video>
+              </div>
+              <div className="videoCardCopy">
+                <span>02 / VIDEO PRACTICE</span>
+                <h3>视频作品 · 8月8日</h3>
+                <p>完整动态设计练习，记录画面转场、文字与视觉氛围的表达。</p>
+              </div>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section className="section projects" id="projects">
