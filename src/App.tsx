@@ -336,7 +336,7 @@ export default function Home() {
                   poster="/videos/video-aug10-poster.webp"
                   aria-label="播放8月10日视频作品"
                 >
-                  <source src="/videos/video-aug10.mp4" type="video/mp4" />
+                  <source src="/videos/video-aug10-v2.mp4" type="video/mp4" />
                   您的浏览器暂不支持视频播放。
                 </video>
               </div>
@@ -356,7 +356,7 @@ export default function Home() {
                   poster="/videos/video-aug08-poster.webp"
                   aria-label="播放8月8日视频作品"
                 >
-                  <source src="/videos/video-aug08.mp4" type="video/mp4" />
+                  <source src="/videos/video-aug08-v2.mp4" type="video/mp4" />
                   您的浏览器暂不支持视频播放。
                 </video>
               </div>
