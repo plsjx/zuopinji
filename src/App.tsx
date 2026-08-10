@@ -342,7 +342,7 @@ export default function Home() {
               </div>
               <div className="videoCardCopy">
                 <span>01 / MOTION STUDY</span>
-                <h3>视频作品 · 8月10日</h3>
+                <h3>岛村动画练习</h3>
                 <p>短篇动态视觉练习，尝试节奏、构图与角色画面的结合。</p>
               </div>
             </article>
@@ -362,7 +362,7 @@ export default function Home() {
               </div>
               <div className="videoCardCopy">
                 <span>02 / VIDEO PRACTICE</span>
-                <h3>视频作品 · 8月8日</h3>
+                <h3>TEVI快闪破碎练习</h3>
                 <p>完整动态设计练习，记录画面转场、文字与视觉氛围的表达。</p>
               </div>
             </article>
