@@ -75,12 +75,12 @@ const featuredProjects = [
     tags: ["电商海报", "产品卖点", "促销版式"],
   },
   {
-    title: "AI 角色与风格化视觉",
-    type: "AI 视觉 / 角色海报 / 风格实验",
+    title: "角色与风格化视觉",
+    type: "动漫角色 / 海报排版 / 风格实验",
     image: "/works/maimai-character-960.webp",
     description:
       "尝试使用更强烈的角色视觉、竖排文字和图像层次制造记忆点，探索二次元风格在个人视觉练习中的表现方式。",
-    tags: ["AI 视觉", "角色设计", "风格实验"],
+    tags: ["动漫角色", "海报排版", "风格实验"],
   },
   {
     title: "生活方式产品海报",
@@ -95,7 +95,7 @@ const featuredProjects = [
 const works = [
   {
     title: "异世界情绪视觉练习",
-    category: "AI 角色视觉",
+    category: "角色视觉",
     image: "/works/isekai-emotion-960.webp",
   },
   {
@@ -145,7 +145,7 @@ const works = [
   },
   {
     title: "Maimai DX 角色海报",
-    category: "AI 视觉",
+    category: "角色海报",
     image: "/works/maimai-character-960.webp",
   },
   {
@@ -180,8 +180,8 @@ const strengths = [
     text: "目前作品覆盖耳机、相机、洗护、美妆、母婴、食品等品类，正在建立不同商品的画面处理经验。",
   },
   {
-    title: "AI 与素材整合",
-    text: "会通过检索、素材整理和 AI 辅助生成补足画面元素，再用设计软件完成排版与商业化表达。",
+    title: "素材整理与画面完善",
+    text: "以自主排版和视觉处理为主，会进行素材检索、整理与画面细节调整；少数练习中仅参考 AI 提供的建议并进行少量辅助。",
   },
   {
     title: "学习与执行",
@@ -260,7 +260,7 @@ export default function Home() {
           </h1>
           <div className="heroBottom">
             <p>
-              聚焦电商海报、产品详情、AI 角色视觉与品牌活动页面，在不同品类和视觉风格中持续探索更清晰、更有记忆点的设计表达。
+              聚焦电商海报、产品详情、动漫角色海报与品牌活动页面，在不同品类和视觉风格中持续探索更清晰、更有记忆点的设计表达。
             </p>
             <div className="heroActions">
               <a className="primaryButton" href="#projects">
@@ -297,7 +297,7 @@ export default function Home() {
                   我就读于浙江育英职业技术学院网络营销与直播电商专业，正在学习电商运营、图文设计、线上内容表达和数据处理。
                 </h3>
                 <p className="bioCopy">
-                  目前作品主要来自课程练习、个人练习和 AI 辅助视觉实验。我希望把这些作品整理成更专业的作品集，也希望后续通过实习接触真实项目，提升画面完成度、商业理解和交付能力。
+                  目前作品主要来自课程练习和个人练习，画面设计与排版由我完成；仅有极少数作品参考过 AI 提供的建议或少量辅助。我希望把这些作品整理成更专业的作品集，也希望后续通过实习接触真实项目，提升画面完成度和交付能力。
                 </p>
               </div>
 
@@ -383,7 +383,7 @@ export default function Home() {
               <span>02</span>
               <p>代表方向</p>
             </div>
-            <h2>把已有作品按“电商产品、AI 角色、生活方式”三个方向重新陈列。</h2>
+            <h2>把已有作品按“电商产品、动漫角色、生活方式”三个方向重新陈列。</h2>
           </aside>
 
           <div className="projectStack">
@@ -554,7 +554,7 @@ export default function Home() {
           <div className="contactPanel">
             <a href="mailto:2877311858@qq.com">2877311858@qq.com</a>
             <a href="tel:18958065109">18958065109</a>
-            <p>期望城市：杭州。可长期实习，方向偏视觉设计、电商设计、AI 辅助设计。</p>
+            <p>期望城市：杭州。可长期实习，方向偏视觉设计、电商美工与视频剪辑。</p>
           </div>
         </div>
       </section>

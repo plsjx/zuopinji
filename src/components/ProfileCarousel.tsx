@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 const slides = [
   {
     image: "/works/maimai-character-960.webp",
-    alt: "Miyagi 的 AI 角色视觉作品",
-    label: "AI 角色视觉",
+    alt: "Miyagi 的动漫角色海报作品",
+    label: "动漫角色海报",
   },
   {
     image: "/works/sports-earbuds-960.webp",
