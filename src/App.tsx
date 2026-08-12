@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import ProfileCarousel from "./components/ProfileCarousel";
 import BorderGlow from "./components/BorderGlow";
 import MotionSystem from "./components/MotionSystem";
@@ -36,7 +37,7 @@ function DeferredParticles() {
     <Suspense fallback={null}>
       <Particles
         particleColors={["#39c2b1"]}
-        particleCount={300}
+        particleCount={160}
         particleSpread={10}
         speed={0.1}
         particleBaseSize={100}
@@ -337,7 +338,7 @@ export default function Home() {
                 <video
                   controls
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   poster="/videos/video-aug10-poster.webp"
                   aria-label="播放8月10日视频作品"
                 >
@@ -357,7 +358,7 @@ export default function Home() {
                 <video
                   controls
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   poster="/videos/video-aug08-poster.webp"
                   aria-label="播放8月8日视频作品"
                 >
@@ -448,7 +449,7 @@ export default function Home() {
           </div>
         </div>
 
-        {activeWork && activeWorkIndex !== null && (
+        {activeWork && activeWorkIndex !== null && createPortal((
           <div
             className="imageLightbox"
             role="dialog"
@@ -515,7 +516,7 @@ export default function Home() {
               </footer>
             </div>
           </div>
-        )}
+        ), document.body)}
       </section>
 
       <section className="section strengths" id="strengths">

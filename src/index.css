@@ -1094,12 +1094,14 @@ video {
 }
 
 .imageLightboxDialog figure img {
+  display: block;
   width: auto;
   max-width: 100%;
   height: auto;
   max-height: 100%;
   padding: clamp(8px, 1.5vw, 24px);
   object-fit: contain;
+  object-position: center;
 }
 
 .imageLightboxClose {
