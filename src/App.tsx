@@ -198,7 +198,7 @@ const contacts = [
 
 export default function Home() {
   const [activeWorkIndex, setActiveWorkIndex] = useState<number | null>(null);
-  const [shouldLoadVideoMetadata, setShouldLoadVideoMetadata] = useState(false);
+  const [shouldLoadVideos, setShouldLoadVideos] = useState(false);
   const videoShowcaseRef = useRef<HTMLDivElement>(null);
   const activeWork = activeWorkIndex === null ? null : works[activeWorkIndex];
 
@@ -209,7 +209,7 @@ export default function Home() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        setShouldLoadVideoMetadata(true);
+        setShouldLoadVideos(true);
         observer.disconnect();
       },
       { rootMargin: "500px 0px" },
@@ -217,6 +217,14 @@ export default function Home() {
     observer.observe(showcase);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!shouldLoadVideos) return;
+    videoShowcaseRef.current?.querySelectorAll("video").forEach((video) => {
+      video.preload = "auto";
+      video.load();
+    });
+  }, [shouldLoadVideos]);
 
   useEffect(() => {
     if (activeWorkIndex === null) return undefined;
@@ -356,7 +364,7 @@ export default function Home() {
                 <video
                   controls
                   playsInline
-                  preload={shouldLoadVideoMetadata ? "metadata" : "none"}
+                  preload={shouldLoadVideos ? "auto" : "none"}
                   poster="/videos/video-aug10-poster.webp"
                   aria-label="播放8月10日视频作品"
                 >
@@ -376,7 +384,7 @@ export default function Home() {
                 <video
                   controls
                   playsInline
-                  preload={shouldLoadVideoMetadata ? "metadata" : "none"}
+                  preload={shouldLoadVideos ? "auto" : "none"}
                   poster="/videos/video-aug08-poster.webp"
                   aria-label="播放8月8日视频作品"
                 >
