@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ProfileCarousel from "./components/ProfileCarousel";
 import BorderGlow from "./components/BorderGlow";
@@ -198,7 +198,25 @@ const contacts = [
 
 export default function Home() {
   const [activeWorkIndex, setActiveWorkIndex] = useState<number | null>(null);
+  const [shouldLoadVideoMetadata, setShouldLoadVideoMetadata] = useState(false);
+  const videoShowcaseRef = useRef<HTMLDivElement>(null);
   const activeWork = activeWorkIndex === null ? null : works[activeWorkIndex];
+
+  useEffect(() => {
+    const showcase = videoShowcaseRef.current;
+    if (!showcase) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShouldLoadVideoMetadata(true);
+        observer.disconnect();
+      },
+      { rootMargin: "500px 0px" },
+    );
+    observer.observe(showcase);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (activeWorkIndex === null) return undefined;
@@ -323,7 +341,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="shell videoShowcase">
+        <div className="shell videoShowcase" ref={videoShowcaseRef}>
           <header className="videoShowcaseHeader">
             <div>
               <span>VIDEO / 2026</span>
@@ -338,7 +356,7 @@ export default function Home() {
                 <video
                   controls
                   playsInline
-                  preload="none"
+                  preload={shouldLoadVideoMetadata ? "metadata" : "none"}
                   poster="/videos/video-aug10-poster.webp"
                   aria-label="播放8月10日视频作品"
                 >
@@ -358,7 +376,7 @@ export default function Home() {
                 <video
                   controls
                   playsInline
-                  preload="none"
+                  preload={shouldLoadVideoMetadata ? "metadata" : "none"}
                   poster="/videos/video-aug08-poster.webp"
                   aria-label="播放8月8日视频作品"
                 >
