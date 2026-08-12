@@ -60,7 +60,7 @@ const navItems = [
 ];
 
 const stats = [
-  { value: "14", label: "张个人作品收录" },
+  { value: "15", label: "张个人作品收录" },
   { value: "3", label: "类视觉练习方向" },
   { value: "长期", label: "杭州实习目标" },
 ];
@@ -93,6 +93,11 @@ const featuredProjects = [
 ];
 
 const works = [
+  {
+    title: "异世界情绪视觉练习",
+    category: "AI 角色视觉",
+    image: "/works/isekai-emotion-960.webp",
+  },
   {
     title: "4D 环绕立体声耳机",
     category: "电商海报",
