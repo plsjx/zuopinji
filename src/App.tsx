@@ -61,7 +61,7 @@ const navItems = [
 ];
 
 const stats = [
-  { value: "15", label: "张个人作品收录" },
+  { value: "17", label: "张个人作品收录" },
   { value: "3", label: "类视觉练习方向" },
   { value: "长期", label: "杭州实习目标" },
 ];
@@ -98,6 +98,16 @@ const works = [
     title: "异世界情绪视觉练习",
     category: "角色视觉",
     image: "/works/isekai-emotion-960.webp",
+  },
+  {
+    title: "头戴耳机产品详情页",
+    category: "产品详情",
+    image: "/works/headphone-detail-960.webp",
+  },
+  {
+    title: "拍立得相机产品详情页",
+    category: "产品详情",
+    image: "/works/camera-detail-960.webp",
   },
   {
     title: "4D 环绕立体声耳机",
